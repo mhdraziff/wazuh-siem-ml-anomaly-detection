@@ -127,7 +127,7 @@ However, further validation with real-world data is required to ensure:
 
 ### 🔹 Wazuh Alerts
 
-![Wazuh](screenshots/wazuh-dashboard.png)
+![Wazuh](screenshots/wazuh-alert.png)
 
 ### 🔹 Kibana Monitoring
 
