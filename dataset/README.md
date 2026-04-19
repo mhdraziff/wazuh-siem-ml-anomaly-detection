@@ -1,8 +1,12 @@
-## 📁 Dataset
+# Dataset Information
 
-The dataset used in this project is generated from simulated attack scenarios.
+The dataset used in this project is generated from simulated attack scenarios:
+- SSH brute force (Hydra)
+- Port scanning (Nmap)
+- File modification
 
-Due to size and security considerations, the full dataset is not included.
+Only a sample dataset is included for demonstration purposes.
 
-A sample dataset is provided in:
-`dataset/sample_log.json`
+Full dataset is not uploaded due to:
+- size limitations
+- security considerations
