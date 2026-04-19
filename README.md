@@ -1,29 +1,26 @@
-# 🔐 SIEM Security Monitoring with Wazuh + Machine Learning
+# 🔐 SIEM + Machine Learning for Anomaly Detection (Wazuh)
 
-## 📌 Overview
+## 🚨 Problem
 
-This project implements a **Security Information and Event Management (SIEM)** system using **Wazuh**, enhanced with **Machine Learning (Random Forest)** to detect anomalies in web server logs.
+Traditional SIEM systems like Wazuh rely on **rule-based detection**, which:
 
-The system is designed to improve traditional rule-based detection by adding an intelligent layer for anomaly classification.
-
----
-
-## 🚀 Key Features
-
-* Real-time log monitoring using Wazuh
-* Centralized log storage with Elasticsearch
-* Visualization using Kibana
-* Machine Learning-based anomaly detection (Random Forest)
-* Automated alert notification via Telegram
-* Detection of attacks:
-
-  * SSH brute force
-  * Port scanning (Nmap)
-  * File integrity changes
+* Cannot detect unknown attack patterns
+* Generates high false positives
+* Requires manual analysis
 
 ---
 
-## 🏗️ System Architecture
+## 💡 Solution
+
+This project enhances SIEM by integrating **Machine Learning (Random Forest)** to:
+
+* Classify logs into **normal vs anomaly**
+* Reduce false positives
+* Add intelligent detection layer
+
+---
+
+## 🏗️ Architecture
 
 ![Topology](docs/topology.png)
 
@@ -35,10 +32,25 @@ The system is designed to improve traditional rule-based detection by adding an 
 
 ---
 
-## 📊 Machine Learning
+## ⚙️ How It Works
+
+1. Web server generates logs (SSH, Apache, system logs)
+2. Wazuh Agent sends logs to Wazuh Manager
+3. Logs stored in Elasticsearch
+4. Machine Learning Engine:
+
+   * Fetch logs via API
+   * Preprocess data
+   * Classify using Random Forest
+5. If anomaly detected → Telegram alert sent
+
+---
+
+## 🧠 Machine Learning Details
 
 * Algorithm: Random Forest
-* Features used:
+* Type: Supervised Learning
+* Features:
 
   * firedtimes
   * rule_level
@@ -49,9 +61,23 @@ The system is designed to improve traditional rule-based detection by adding an 
 
 ---
 
+## 📊 Results
+
+### Confusion Matrix
+
+![CM](screenshots/confusion-matrix.png)
+
+### Key Insight
+
+* ML improves anomaly classification accuracy
+* Reduces false positive alerts
+* Adds intelligent validation layer on top of Wazuh
+
+---
+
 ## 📸 System Output
 
-### Wazuh Alert
+### Wazuh Alerts
 
 ![Wazuh](screenshots/wazuh-dashboard.png)
 
@@ -61,48 +87,44 @@ The system is designed to improve traditional rule-based detection by adding an 
 
 ### Telegram Alert
 
-![Telegram](screenshots/telegram-documentation.png)
-
-### Confusion Matrix
-
-![CM](screenshots/confusion-matrix.png)
+![Telegram](screenshots/telegram-alert.png)
 
 ---
 
-## 🛠️ Technologies Used
+## 🛠️ Tech Stack
 
-* Wazuh
-* Elasticsearch
-* Kibana
+* Wazuh (SIEM)
+* Elasticsearch + Kibana
 * AWS EC2
 * Python (Scikit-learn, Pandas)
 * Telegram Bot API
 
 ---
 
-## 📂 Project Structure
+## 📂 Key Components
 
-```bash
-scripts/        # Machine learning & log processing
-docs/           # System diagrams
-screenshots/    # Output visualization
-config/         # Configuration notes
-report/         # Final project report
+```bash id="struct1"
+scripts/
+  ├── data_collection.py
+  ├── preprocessing.py
+  ├── train_model.py
+  ├── evaluate.py
+  └── detection.py
 ```
 
 ---
 
-## 🎯 Result
+## 🎯 Why This Project Matters
 
-The integration of machine learning improves anomaly detection and reduces false positives compared to rule-based SIEM alone.
+This project simulates a **real SOC environment** by:
+
+* Monitoring logs in real-time
+* Detecting attacks (brute force, scanning, file change)
+* Automating alerting system
 
 ---
 
-## 📎 Full Report
-
-See full documentation here:
-`report/laporan_tugas_akhir.pdf`
-
 ## 👨‍💻 Author
-Muhammad Razif  
-Cybersecurity Enthusiast | SOC Analyst (Aspiring)
+
+Muhammad Razif
+Aspiring SOC Analyst | Cybersecurity Enthusiast
