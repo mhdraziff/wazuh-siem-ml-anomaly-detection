@@ -61,7 +61,7 @@ The system is designed to improve traditional rule-based detection by adding an 
 
 ### Telegram Alert
 
-![Telegram](screenshots/telegram-alert.png)
+![Telegram](screenshots/telegram-documentation.png)
 
 ### Confusion Matrix
 
