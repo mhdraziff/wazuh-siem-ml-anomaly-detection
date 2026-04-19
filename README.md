@@ -1,4 +1,11 @@
+![Python](https://img.shields.io/badge/Python-3.x-blue)
+![SIEM](https://img.shields.io/badge/SIEM-Wazuh-green)
+![ML](https://img.shields.io/badge/Machine%20Learning-Random%20Forest-orange)
+![Status](https://img.shields.io/badge/Status-Completed-success)
+
 # 🔐 SIEM Security Monitoring with Wazuh + Machine Learning
+
+A practical implementation of SIEM enhanced with Machine Learning to improve anomaly detection and reduce false positives in web server security monitoring.
 
 ## 🚨 Problem
 
@@ -203,6 +210,17 @@ This system can be used by a Security Operations Center (SOC) analyst to:
 * Apply hyperparameter tuning
 * Integrate with real enterprise SOC environment
 * Improve dataset diversity
+
+---
+
+## 🌍 Why This Project Matters
+
+Modern cybersecurity requires more than rule-based detection.
+
+This project demonstrates how combining SIEM with Machine Learning can:
+- Improve detection accuracy
+- Reduce alert fatigue
+- Enhance SOC analyst efficiency
 
 ---
 
