@@ -1,0 +1,18 @@
+[
+  {
+    "rule_level": 10,
+    "firedtimes": 5,
+    "hour": 2,
+    "is_ssh": 1,
+    "log_length": 120,
+    "label": 1
+  },
+  {
+    "rule_level": 3,
+    "firedtimes": 1,
+    "hour": 14,
+    "is_ssh": 0,
+    "log_length": 80,
+    "label": 0
+  }
+]
