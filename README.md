@@ -102,3 +102,7 @@ The integration of machine learning improves anomaly detection and reduces false
 
 See full documentation here:
 `report/laporan_tugas_akhir.pdf`
+
+## 👨‍💻 Author
+Muhammad Razif  
+Cybersecurity Enthusiast | SOC Analyst (Aspiring)
