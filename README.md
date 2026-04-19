@@ -1,26 +1,26 @@
-# 🔐 SIEM + Machine Learning for Anomaly Detection (Wazuh)
+# 🔐 SIEM Security Monitoring with Wazuh + Machine Learning
 
 ## 🚨 Problem
 
-Traditional SIEM systems like Wazuh rely on **rule-based detection**, which:
+Traditional SIEM systems such as Wazuh rely on **rule-based detection**, which has several limitations:
 
-* Cannot detect unknown attack patterns
-* Generates high false positives
-* Requires manual analysis
+* Unable to detect unknown or new attack patterns
+* High number of false positive alerts
+* Requires manual log analysis by administrators
 
 ---
 
 ## 💡 Solution
 
-This project enhances SIEM by integrating **Machine Learning (Random Forest)** to:
+This project enhances SIEM capabilities by integrating **Machine Learning (Random Forest)** to:
 
 * Classify logs into **normal vs anomaly**
 * Reduce false positives
-* Add intelligent detection layer
+* Add intelligent anomaly detection on top of rule-based systems
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ System Architecture
 
 ![Topology](docs/topology.png)
 
@@ -32,32 +32,51 @@ This project enhances SIEM by integrating **Machine Learning (Random Forest)** t
 
 ---
 
-## ⚙️ How It Works
+## ⚙️ How the System Works
 
 1. Web server generates logs (SSH, Apache, system logs)
-2. Wazuh Agent sends logs to Wazuh Manager
-3. Logs stored in Elasticsearch
-4. Machine Learning Engine:
+2. Wazuh Agent collects and sends logs to Wazuh Manager
+3. Wazuh Manager analyzes logs using rule-based detection
+4. Logs are stored in Elasticsearch
+5. Machine Learning Engine:
 
-   * Fetch logs via API
-   * Preprocess data
-   * Classify using Random Forest
-5. If anomaly detected → Telegram alert sent
+   * Fetches logs from Elasticsearch
+   * Performs preprocessing & feature engineering
+   * Classifies logs using Random Forest
+6. If anomaly is detected → Telegram notification is sent
+
+---
+
+## 🧪 Attack Simulation
+
+The system was tested using several simulated attacks:
+
+* SSH brute force attack (Hydra)
+* Port scanning (Nmap)
+* File modification attack
+
+These attack logs were used as:
+
+* Training dataset
+* Testing dataset
+* Real-time detection scenarios
 
 ---
 
 ## 🧠 Machine Learning Details
 
-* Algorithm: Random Forest
-* Type: Supervised Learning
-* Features:
+### Algorithm
 
-  * firedtimes
-  * rule_level
-  * hour
-  * is_night
-  * is_ssh
-  * log_length
+* Random Forest (Supervised Learning)
+
+### Features Used
+
+* firedtimes (alert frequency)
+* rule_level (severity level)
+* hour (time of event)
+* is_night (00:00–05:00 indicator)
+* is_ssh (SSH activity indicator)
+* log_length (log message length)
 
 ---
 
@@ -65,66 +84,129 @@ This project enhances SIEM by integrating **Machine Learning (Random Forest)** t
 
 ### Confusion Matrix
 
-![CM](screenshots/confusion-matrix.png)
+![Confusion Matrix](screenshots/confusion-matrix.png)
 
-### Key Insight
+### Key Metrics
 
-* ML improves anomaly classification accuracy
-* Reduces false positive alerts
-* Adds intelligent validation layer on top of Wazuh
+* Accuracy: 1.000
+* Precision: 1.000
+* Recall: 1.000
+* F1-Score: 1.000
+
+### ⚠️ Note on Model Performance
+
+The model achieved perfect scores (Accuracy, Precision, Recall, F1-Score = 1.000).
+
+This is mainly due to:
+- Dataset generated from controlled attack simulations (Hydra, Nmap)
+- Clear separation between normal and attack patterns
+- Strong feature representation (rule_level, firedtimes, etc.)
+
+While the results indicate high model performance, they may not fully represent real-world scenarios where:
+- Data is more noisy and complex
+- Attack patterns are less obvious
+- Class boundaries are not clearly separable
+
+### 📌 Interpretation
+
+The perfect score suggests that the model has learned the patterns very well within the given dataset.
+
+However, further validation with real-world data is required to ensure:
+- Model generalization
+- Robust anomaly detection capability
+  
+### Key Insights
+
+* Machine learning improves anomaly detection accuracy
+* Reduces false positive alerts from rule-based system
+* Adds intelligent validation layer for security events
 
 ---
 
 ## 📸 System Output
 
-### Wazuh Alerts
+### 🔹 Wazuh Alerts
 
 ![Wazuh](screenshots/wazuh-dashboard.png)
 
-### Kibana Monitoring
+### 🔹 Kibana Monitoring
 
 ![Kibana](screenshots/kibana.png)
 
-### Telegram Alert
+### 🔹 Telegram Notification
 
-![Telegram](screenshots/telegram-alert.png)
+![Telegram](screenshots/telegram-documentation.png)
+
+---
+
+## ⚙️ Machine Learning Pipeline Scripts
+
+* `data_collection.py` → Fetch logs from Elasticsearch
+* `preprocessing.py` → Clean & transform log data
+* `train_model.py` → Train Random Forest model
+* `evaluate.py` → Evaluate model performance
+* `detection.py` → Real-time anomaly detection
 
 ---
 
 ## 🛠️ Tech Stack
 
 * Wazuh (SIEM)
-* Elasticsearch + Kibana
+* Elasticsearch
+* Kibana
 * AWS EC2
-* Python (Scikit-learn, Pandas)
+* Python (Scikit-learn, Pandas, NumPy)
 * Telegram Bot API
 
 ---
 
-## 📂 Key Components
+## 📂 Project Structure
 
-```bash id="struct1"
-scripts/
-  ├── data_collection.py
-  ├── preprocessing.py
-  ├── train_model.py
-  ├── evaluate.py
-  └── detection.py
+```bash
+wazuh-siem-ml-anomaly-detection/
+│
+├── docs/            # System diagrams (topology & flowchart)
+├── screenshots/     # Output visualization
+├── scripts/         # Machine learning pipeline
+├── dataset/         # Sample logs (optional)
+├── model/           # Trained model
+├── config/          # System & ML configuration
+├── report/          # Final report (PDF)
+└── README.md
 ```
 
 ---
 
-## 🎯 Why This Project Matters
+## 🎯 SOC Use Case
 
-This project simulates a **real SOC environment** by:
+This system can be used by a Security Operations Center (SOC) analyst to:
 
-* Monitoring logs in real-time
-* Detecting attacks (brute force, scanning, file change)
-* Automating alerting system
+* Monitor real-time security logs
+* Detect suspicious activities automatically
+* Reduce manual log analysis workload
+* Improve incident response time
+* Identify anomalies that are not detected by rule-based SIEM
+
+---
+
+## ⚠️ Limitations
+
+* Dataset based on simulated attacks
+* No hyperparameter tuning (basic implementation)
+* Limited to Random Forest (no deep learning)
+
+---
+
+## 🚀 Future Improvements
+
+* Implement unsupervised anomaly detection
+* Apply hyperparameter tuning
+* Integrate with real enterprise SOC environment
+* Improve dataset diversity
 
 ---
 
 ## 👨‍💻 Author
 
 Muhammad Razif
-Aspiring SOC Analyst | Cybersecurity Enthusiast
+Cybersecurity Enthusiast | Aspiring SOC Analyst
